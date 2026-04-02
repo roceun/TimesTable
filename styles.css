@@ -1,9 +1,11 @@
 :root {
-  color-scheme: light;
-  --bg-top: #ffe4b2;
-  --bg-bottom: #ffd6c9;
-  --panel: rgba(255, 251, 245, 0.94);
+  color-scheme: light dark;
+  --bg-top: #ffe2b2;
+  --bg-bottom: #ffd1c3;
+  --panel: rgba(255, 250, 244, 0.94);
   --panel-line: rgba(255, 255, 255, 0.92);
+  --card: rgba(255, 255, 255, 0.78);
+  --card-line: rgba(229, 216, 201, 0.86);
   --text: #2f1e15;
   --muted: #82614d;
   --accent: #ec6f2d;
@@ -15,15 +17,50 @@
   --success-soft: #d8f4e6;
   --danger: #c84c46;
   --danger-soft: #fde2df;
-  --key-face: #f6e4c7;
-  --key-top: #fff6e7;
-  --key-shadow: #d4a66b;
+  --surface: #fff9ef;
+  --surface-strong: #f7eddc;
+  --surface-line: rgba(223, 209, 193, 0.9);
+  --key-face: #fff6ec;
+  --key-top: #ffffff;
+  --key-border: rgba(228, 203, 178, 0.9);
+  --key-shadow: rgba(135, 92, 55, 0.12);
   --screen-shadow: 0 24px 52px rgba(109, 65, 28, 0.18);
-  --key-shadow-lg: 0 8px 0 var(--key-shadow), 0 16px 22px rgba(115, 74, 33, 0.18);
+  --key-shadow-lg: 0 14px 24px rgba(115, 74, 33, 0.12);
   --radius-xl: 30px;
   --radius-lg: 24px;
   --radius-md: 18px;
   --font-main: "Pretendard", "Noto Sans KR", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-top: #172131;
+    --bg-bottom: #0f141f;
+    --panel: rgba(18, 24, 35, 0.92);
+    --panel-line: rgba(119, 146, 181, 0.18);
+    --card: rgba(24, 31, 44, 0.88);
+    --card-line: rgba(117, 142, 174, 0.22);
+    --text: #eef4ff;
+    --muted: #99a9c0;
+    --accent: #ff9a56;
+    --accent-strong: #ff7a2f;
+    --accent-soft: rgba(255, 154, 86, 0.14);
+    --sky: #69c6ff;
+    --sky-soft: rgba(92, 184, 232, 0.16);
+    --success: #69d6a0;
+    --success-soft: rgba(47, 158, 111, 0.16);
+    --danger: #ff8e87;
+    --danger-soft: rgba(200, 76, 70, 0.18);
+    --surface: #202938;
+    --surface-strong: #18202d;
+    --surface-line: rgba(119, 146, 181, 0.22);
+    --key-face: linear-gradient(180deg, #202b3c, #1a2433);
+    --key-top: #273245;
+    --key-border: rgba(124, 149, 184, 0.2);
+    --key-shadow: rgba(0, 0, 0, 0.34);
+    --screen-shadow: 0 28px 60px rgba(0, 0, 0, 0.38);
+    --key-shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.26);
+  }
 }
 
 * {
@@ -170,8 +207,8 @@ button {
 .result-card {
   padding: 16px 16px 18px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow: inset 0 0 0 2px rgba(237, 218, 197, 0.75);
+  background: var(--card);
+  box-shadow: inset 0 0 0 2px var(--card-line);
 }
 
 .metric-label,
@@ -203,8 +240,8 @@ button {
 .rule-card {
   padding: 16px;
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.74);
-  box-shadow: inset 0 0 0 2px rgba(229, 216, 201, 0.9);
+  background: var(--card);
+  box-shadow: inset 0 0 0 2px var(--card-line);
 }
 
 .rule-card h2,
@@ -246,8 +283,8 @@ button {
 
 .secondary-button {
   color: var(--text);
-  background: #fff;
-  box-shadow: inset 0 0 0 2px rgba(223, 209, 193, 0.9);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 2px var(--surface-line);
 }
 
 .primary-button:hover,
@@ -301,7 +338,7 @@ button {
 }
 
 .status-chip.is-idle {
-  background: rgba(255, 255, 255, 0.76);
+  background: var(--surface);
   color: var(--muted);
 }
 
@@ -324,8 +361,8 @@ button {
   justify-content: center;
   border: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: inset 0 0 0 2px rgba(223, 209, 193, 0.9);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 2px var(--surface-line);
   color: var(--muted);
   font-size: 1.5rem;
   font-weight: 700;
@@ -369,8 +406,8 @@ button {
 .result-hero {
   padding: 18px;
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.78);
-  box-shadow: inset 0 0 0 2px rgba(229, 216, 201, 0.86);
+  background: var(--card);
+  box-shadow: inset 0 0 0 2px var(--card-line);
 }
 
 .problem-card {
@@ -406,8 +443,10 @@ button {
   align-items: center;
   padding: 16px 18px;
   border-radius: 22px;
-  background: linear-gradient(180deg, #fff9ef, #f7eddc);
-  box-shadow: inset 0 4px 10px rgba(138, 100, 56, 0.08);
+  background: linear-gradient(180deg, var(--surface), var(--surface-strong));
+  box-shadow:
+    inset 0 0 0 1px var(--surface-line),
+    inset 0 4px 10px rgba(138, 100, 56, 0.08);
 }
 
 .input-value {
@@ -427,6 +466,8 @@ button {
 
 .keypad-panel {
   position: relative;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--card) 72%, transparent), color-mix(in srgb, var(--surface) 62%, transparent));
 }
 
 .keypad {
@@ -439,30 +480,41 @@ button {
   position: relative;
   min-height: 88px;
   border: 0;
-  border-radius: 50%;
-  padding: 10px 6px;
+  border-radius: 22px;
+  padding: 14px 8px 12px;
   color: var(--text);
-  background: radial-gradient(circle at top, var(--key-top), var(--key-face));
-  box-shadow: var(--key-shadow-lg);
+  background: var(--key-face);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 0 1px var(--key-border),
+    var(--key-shadow-lg);
   cursor: pointer;
   transition:
     transform 110ms ease,
     box-shadow 110ms ease,
-    filter 110ms ease;
+    filter 110ms ease,
+    background-color 110ms ease;
 }
 
 .keypad-button:active,
 .keypad-button.is-pressed {
-  transform: translateY(6px);
-  box-shadow: 0 2px 0 var(--key-shadow), 0 8px 12px rgba(115, 74, 33, 0.14);
+  transform: translateY(3px) scale(0.985);
+  box-shadow:
+    inset 0 0 0 1px var(--key-border),
+    0 6px 12px var(--key-shadow);
 }
 
 .keypad-button[data-kind="action"] {
-  background: radial-gradient(circle at top, #fef2db, #efd2aa);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 86%, var(--sky-soft)), color-mix(in srgb, var(--surface-strong) 90%, var(--sky-soft)));
 }
 
 .keypad-button[data-kind="submit"] {
-  background: radial-gradient(circle at top, #ffe4d8, #ffba8f);
+  color: #ffffff;
+  background: linear-gradient(180deg, var(--accent), var(--accent-strong));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 14px 24px rgba(213, 83, 27, 0.2);
 }
 
 .keypad-primary {
@@ -479,6 +531,10 @@ button {
   font-weight: 800;
   letter-spacing: 0.1em;
   color: var(--muted);
+}
+
+.keypad-button[data-kind="submit"] .keypad-secondary {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .helper-text {
@@ -744,13 +800,19 @@ button {
 
   .keypad-button {
     min-height: 62px;
-    box-shadow: 0 6px 0 var(--key-shadow), 0 12px 16px rgba(115, 74, 33, 0.14);
+    border-radius: 18px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 0 0 1px var(--key-border),
+      0 10px 16px var(--key-shadow);
   }
 
   .keypad-button:active,
   .keypad-button.is-pressed {
-    transform: translateY(4px);
-    box-shadow: 0 2px 0 var(--key-shadow), 0 6px 10px rgba(115, 74, 33, 0.12);
+    transform: translateY(3px) scale(0.985);
+    box-shadow:
+      inset 0 0 0 1px var(--key-border),
+      0 5px 9px var(--key-shadow);
   }
 
   .keypad-primary {

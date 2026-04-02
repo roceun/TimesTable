@@ -104,6 +104,19 @@ function goToStartScreen() {
   render();
 }
 
+function confirmCloseGame() {
+  if (state.screen !== "play") {
+    goToStartScreen();
+    return;
+  }
+
+  const shouldClose = window.confirm("지금 게임을 종료하고 처음 화면으로 돌아갈까요?");
+
+  if (shouldClose) {
+    goToStartScreen();
+  }
+}
+
 function startGame() {
   stopTimer();
   window.clearTimeout(feedbackTimeoutId);
@@ -472,7 +485,9 @@ document.addEventListener("click", (event) => {
 
     if (action === "start") {
       startGame();
-    } else if (action === "close-game" || action === "go-home") {
+    } else if (action === "close-game") {
+      confirmCloseGame();
+    } else if (action === "go-home") {
       goToStartScreen();
     }
 
