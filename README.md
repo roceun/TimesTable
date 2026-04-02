@@ -1,0 +1,66 @@
+# TimesTable
+
+1분 동안 최대 몇 문제를 풀 수 있는지 도전하는 정적 웹게임 프로젝트입니다.
+
+현재 저장소에는 바로 실행 가능한 `구구단 타임어택` 게임이 들어 있습니다.
+
+## 게임 소개
+
+- 문제 범위는 `2단-9단`입니다.
+- 제한 시간은 `1분` 고정입니다.
+- 문제는 랜덤으로 나오고 같은 문제가 연속으로 반복되지 않습니다.
+- 답은 전화기 버튼 느낌의 숫자패드로 입력합니다.
+- 오답은 바로 `틀림` 처리되고 곧바로 다음 문제로 넘어갑니다.
+- 결과 화면에서는 총 시도, 정답, 오답, 정답률을 보여줍니다.
+
+기획 문서는 [docs/game-plan.md](/Users/roceun/git/TimesTable/docs/game-plan.md)에 정리되어 있습니다.
+
+## 실행 방법
+
+가장 간단한 방법은 [index.html](/Users/roceun/git/TimesTable/index.html)을 브라우저로 여는 것입니다.
+
+로컬 서버로 실행하려면:
+
+```bash
+cd /Users/roceun/git/TimesTable
+python3 -m http.server 4173
+```
+
+브라우저에서 `http://localhost:4173` 로 접속하면 됩니다.
+
+## 조작 방법
+
+- 시작 화면에서 `1분 시작`을 누릅니다.
+- 숫자패드의 `0-9`를 눌러 답을 입력합니다.
+- `지우기`는 마지막 숫자 1개를 지웁니다.
+- `확인`은 현재 답을 제출합니다.
+- 데스크톱에서는 키보드 숫자키, `Backspace`, `Enter`도 사용할 수 있습니다.
+
+## 배포
+
+이 저장소에는 GitHub Pages 자동 배포 워크플로가 포함되어 있습니다.
+
+필요한 설정
+
+1. GitHub 저장소의 `Settings > Pages`로 이동합니다.
+2. `Build and deployment`에서 `Source`를 `GitHub Actions`로 선택합니다.
+3. `main` 브랜치에 푸시하면 자동으로 배포됩니다.
+
+배포가 완료되면 아래 형식의 주소로 접속할 수 있습니다.
+
+- `https://roceun.github.io/TimesTable/`
+
+## 배포 확인 체크리스트
+
+- GitHub Pages의 `Source`가 `GitHub Actions`로 설정되어 있는가
+- `Actions` 탭에서 `Deploy GitHub Pages` 워크플로가 성공했는가
+- 배포 주소에서 시작 화면이 보이는가
+- 모바일에서도 숫자패드와 결과 화면이 잘 보이는가
+
+## 하네스 팀 구성
+
+- 기획자: 초등학생도 바로 이해할 수 있는 규칙과 화면 흐름을 설계
+- 개발자: 숫자패드 UI, 문제 생성, 타이머, 점수 집계를 구현
+- 검수자: 실제 플레이 흐름에서 혼란 요소와 모바일 사용성을 점검
+
+자세한 운영 방식은 [docs/harness-team.md](/Users/roceun/git/TimesTable/docs/harness-team.md)에 정리되어 있습니다.
