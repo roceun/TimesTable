@@ -1,31 +1,33 @@
 :root {
   color-scheme: light dark;
-  --bg-top: #ffe2b2;
-  --bg-bottom: #ffd1c3;
-  --panel: rgba(255, 250, 244, 0.94);
+  --bg-top: #dff2ff;
+  --bg-bottom: #c8ddff;
+  --panel: rgba(247, 251, 255, 0.94);
   --panel-line: rgba(255, 255, 255, 0.92);
-  --card: rgba(255, 255, 255, 0.78);
-  --card-line: rgba(229, 216, 201, 0.86);
-  --text: #2f1e15;
-  --muted: #82614d;
-  --accent: #ec6f2d;
-  --accent-strong: #d5531b;
-  --accent-soft: #ffe4d4;
+  --card: rgba(255, 255, 255, 0.82);
+  --card-line: rgba(194, 214, 239, 0.86);
+  --text: #1d314d;
+  --muted: #627792;
+  --accent: #5ca7ff;
+  --accent-strong: #2f7ff2;
+  --accent-soft: #d8eaff;
   --sky: #5cb8e8;
-  --sky-soft: #dff4ff;
+  --sky-soft: #e5f5ff;
   --success: #1f9b63;
   --success-soft: #d8f4e6;
   --danger: #c84c46;
   --danger-soft: #fde2df;
-  --surface: #fff9ef;
-  --surface-strong: #f7eddc;
-  --surface-line: rgba(223, 209, 193, 0.9);
-  --key-face: #fff6ec;
+  --surface: #f5faff;
+  --surface-strong: #e8f1ff;
+  --surface-line: rgba(191, 211, 236, 0.92);
+  --glow-left: rgba(255, 255, 255, 0.74);
+  --glow-right: rgba(146, 201, 255, 0.36);
+  --key-face: #f7fbff;
   --key-top: #ffffff;
-  --key-border: rgba(228, 203, 178, 0.9);
-  --key-shadow: rgba(135, 92, 55, 0.12);
-  --screen-shadow: 0 24px 52px rgba(109, 65, 28, 0.18);
-  --key-shadow-lg: 0 14px 24px rgba(115, 74, 33, 0.12);
+  --key-border: rgba(188, 211, 240, 0.94);
+  --key-shadow: rgba(66, 110, 173, 0.12);
+  --screen-shadow: 0 24px 52px rgba(66, 110, 173, 0.18);
+  --key-shadow-lg: 0 14px 24px rgba(66, 110, 173, 0.12);
   --radius-xl: 30px;
   --radius-lg: 24px;
   --radius-md: 18px;
@@ -42,11 +44,11 @@
     --card-line: rgba(117, 142, 174, 0.22);
     --text: #eef4ff;
     --muted: #99a9c0;
-    --accent: #ff9a56;
-    --accent-strong: #ff7a2f;
-    --accent-soft: rgba(255, 154, 86, 0.14);
-    --sky: #69c6ff;
-    --sky-soft: rgba(92, 184, 232, 0.16);
+    --accent: #6eb8ff;
+    --accent-strong: #3a8fff;
+    --accent-soft: rgba(96, 169, 255, 0.16);
+    --sky: #7fd7ff;
+    --sky-soft: rgba(102, 193, 255, 0.18);
     --success: #69d6a0;
     --success-soft: rgba(47, 158, 111, 0.16);
     --danger: #ff8e87;
@@ -54,6 +56,8 @@
     --surface: #202938;
     --surface-strong: #18202d;
     --surface-line: rgba(119, 146, 181, 0.22);
+    --glow-left: rgba(111, 162, 255, 0.18);
+    --glow-right: rgba(101, 212, 255, 0.14);
     --key-face: linear-gradient(180deg, #202b3c, #1a2433);
     --key-top: #273245;
     --key-border: rgba(124, 149, 184, 0.2);
@@ -78,8 +82,8 @@ body {
   font-family: var(--font-main);
   color: var(--text);
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.7), transparent 28%),
-    radial-gradient(circle at top right, rgba(255, 250, 211, 0.55), transparent 24%),
+    radial-gradient(circle at top left, var(--glow-left), transparent 28%),
+    radial-gradient(circle at top right, var(--glow-right), transparent 24%),
     linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
 }
 
@@ -457,7 +461,7 @@ button {
 }
 
 .input-placeholder {
-  color: #bf9f7c;
+  color: #8aa6c9;
 }
 
 .score-grid {
@@ -514,7 +518,7 @@ button {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.22),
     inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-    0 14px 24px rgba(213, 83, 27, 0.2);
+    0 14px 24px color-mix(in srgb, var(--accent-strong) 28%, transparent);
 }
 
 .keypad-primary {

@@ -6,16 +6,16 @@ const FEEDBACK_CLEAR_DELAY = 420;
 
 const keypadLayout = [
   { value: "1", hint: "" },
-  { value: "2", hint: "ABC" },
-  { value: "3", hint: "DEF" },
-  { value: "4", hint: "GHI" },
-  { value: "5", hint: "JKL" },
-  { value: "6", hint: "MNO" },
-  { value: "7", hint: "PQRS" },
-  { value: "8", hint: "TUV" },
-  { value: "9", hint: "WXYZ" },
+  { value: "2", hint: "" },
+  { value: "3", hint: "" },
+  { value: "4", hint: "" },
+  { value: "5", hint: "" },
+  { value: "6", hint: "" },
+  { value: "7", hint: "" },
+  { value: "8", hint: "" },
+  { value: "9", hint: "" },
   { value: "backspace", label: "지우기", kind: "action" },
-  { value: "0", hint: "+" },
+  { value: "0", hint: "" },
   { value: "submit", label: "확인", kind: "submit" },
 ];
 
@@ -272,7 +272,7 @@ function renderStartScreen() {
           <h1 class="hero-title">구구단<br />타임어택</h1>
           <p class="hero-text">
             60초 동안 랜덤 구구단 문제를 최대한 많이 풀어보세요.
-            답은 옛날 전화기 느낌 숫자패드로 입력합니다.
+            빠르게 보고, 빠르게 답을 입력해 기록에 도전하세요.
           </p>
         </div>
 
@@ -326,7 +326,7 @@ function renderPlayScreen() {
     .map((key) => {
       const isDigit = /^\d$/.test(key.value);
       const primary = isDigit ? key.value : key.label;
-      const secondary = isDigit ? key.hint : key.value === "submit" ? "ENTER" : "";
+      const secondary = isDigit ? key.hint : "";
       const pressed = state.pressedKey === key.value ? " is-pressed" : "";
       const kind = key.kind || "digit";
 
