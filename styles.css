@@ -425,6 +425,71 @@ button {
   gap: 10px;
 }
 
+.feedback-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  padding: 20px;
+}
+
+.feedback-toast {
+  min-width: min(88vw, 360px);
+  max-width: 420px;
+  padding: 18px 20px;
+  border-radius: 24px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 20px 40px rgba(29, 49, 77, 0.24);
+  backdrop-filter: blur(10px);
+}
+
+.feedback-overlay.is-correct .feedback-toast {
+  box-shadow:
+    inset 0 0 0 3px color-mix(in srgb, var(--success) 48%, white),
+    0 20px 40px rgba(31, 155, 99, 0.18);
+}
+
+.feedback-overlay.is-wrong .feedback-toast {
+  box-shadow:
+    inset 0 0 0 3px color-mix(in srgb, var(--danger) 48%, white),
+    0 20px 40px rgba(200, 76, 70, 0.18);
+}
+
+.feedback-title {
+  display: block;
+  margin-bottom: 8px;
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.feedback-overlay.is-correct .feedback-title {
+  color: var(--success);
+}
+
+.feedback-overlay.is-wrong .feedback-title {
+  color: var(--danger);
+}
+
+.feedback-message {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.feedback-answer-number {
+  font-size: clamp(1.8rem, 6vw, 2.4rem);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
 .pill {
   background: var(--sky-soft);
   color: #0f648b;
@@ -677,10 +742,6 @@ button {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--card-line) 82%, white);
 }
 
-.score-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 .keypad-panel {
   position: relative;
   background:
@@ -839,11 +900,9 @@ button {
 
   .problem-card,
   .input-card,
-  .score-card,
   .keypad-panel,
   .result-hero,
   .metric-card,
-  .record-card,
   .result-card,
   .rule-card {
     padding: 12px;
@@ -1058,11 +1117,6 @@ button {
     font-size: clamp(1.35rem, 8vw, 2rem);
   }
 
-  .score-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-  }
-
   .keypad {
     gap: 10px;
   }
@@ -1108,5 +1162,15 @@ button {
 
   .result-actions {
     display: grid;
+  }
+
+  .feedback-toast {
+    min-width: min(84vw, 300px);
+    padding: 16px 14px;
+    border-radius: 20px;
+  }
+
+  .feedback-message {
+    font-size: 0.92rem;
   }
 }

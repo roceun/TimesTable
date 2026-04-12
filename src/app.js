@@ -127,6 +127,7 @@ const state = {
   currentProblem: null,
   lastProblemKey: "",
   feedback: "idle",
+  feedbackAnswerMarkup: "",
   pressedKey: "",
 };
 
@@ -233,6 +234,14 @@ function renderFractionMarkup(fraction, extraClass = "") {
       <span class="math-fraction-bottom">${fraction.denominator}</span>
     </span>
   `;
+}
+
+function renderAnswerMarkup(problem) {
+  if (problem.type === "fraction") {
+    return renderFractionMarkup(problem.answer, "math-fraction-answer");
+  }
+
+  return `<span class="feedback-answer-number">${problem.answer}</span>`;
 }
 
 function isFractionMode() {
@@ -376,6 +385,7 @@ function resetFeedback() {
   window.clearTimeout(feedbackTimeoutId);
   feedbackTimeoutId = window.setTimeout(() => {
     state.feedback = "idle";
+    state.feedbackAnswerMarkup = "";
     render();
   }, FEEDBACK_CLEAR_DELAY);
 }
@@ -410,6 +420,7 @@ function goToStartScreen() {
   state.currentProblem = null;
   state.lastProblemKey = "";
   state.feedback = "idle";
+  state.feedbackAnswerMarkup = "";
   state.pressedKey = "";
   render();
 }
@@ -438,6 +449,7 @@ function startGame() {
   state.correctAnswers = 0;
   state.wrongAnswers = 0;
   state.feedback = "idle";
+  state.feedbackAnswerMarkup = "";
   state.pressedKey = "";
   state.lastProblemKey = "";
   nextProblem();
@@ -619,9 +631,11 @@ function handleSubmit() {
   if (isCorrect) {
     state.correctAnswers += 1;
     state.feedback = "correct";
+    state.feedbackAnswerMarkup = "";
   } else {
     state.wrongAnswers += 1;
     state.feedback = "wrong";
+    state.feedbackAnswerMarkup = renderAnswerMarkup(state.currentProblem);
   }
 
   nextProblem();
@@ -858,13 +872,6 @@ function renderPlayScreen() {
       ? "동치분수도 정답으로 인정돼요."
       : "기약분수로 입력해보세요."
     : activeMode.screenCopy;
-  const feedbackClass =
-    state.feedback === "correct"
-      ? "is-correct"
-      : state.feedback === "wrong"
-        ? "is-wrong"
-        : "is-idle";
-
   const keypadButtons = keypadLayout
     .map((key) => {
       const isDigit = /^\d$/.test(key.value);
@@ -890,6 +897,18 @@ function renderPlayScreen() {
     ? `<span class="pill is-warning">${getActiveLevel().label}</span>`
     : "";
 
+  const feedbackOverlay =
+    state.feedback === "idle"
+      ? ""
+      : `
+        <div class="feedback-overlay ${state.feedback === "correct" ? "is-correct" : "is-wrong"}" aria-live="assertive">
+          <div class="feedback-toast">
+            <strong class="feedback-title">${state.feedback === "correct" ? "정답!" : "오답!"}</strong>
+            <div class="feedback-message">${state.feedback === "correct" ? "잘했어요!" : `정답은 ${state.feedbackAnswerMarkup} 입니다.`}</div>
+          </div>
+        </div>
+      `;
+
   const inputValue = renderInputDisplay();
   const prompt = state.currentProblem.type === "fraction"
     ? `
@@ -903,6 +922,7 @@ function renderPlayScreen() {
 
   return `
     <section class="screen screen-play">
+      ${feedbackOverlay}
       <div class="stack play-layout">
         <div class="topbar">
           <div class="stack topbar-info">
@@ -913,7 +933,6 @@ function renderPlayScreen() {
             <span class="helper-text">${activeMode.helper}</span>
           </div>
           <div class="topbar-actions">
-            <span class="status-chip ${feedbackClass}">${getFeedbackLabel()}</span>
             <button
               class="close-button"
               type="button"
@@ -942,24 +961,6 @@ function renderPlayScreen() {
                 <div class="input-display">${inputValue}</div>
               </article>
             </div>
-
-            <article class="score-card">
-              <h2 class="section-title">현재 기록</h2>
-              <div class="score-grid">
-                <div class="record-card">
-                  <span class="record-label">시도</span>
-                  <strong class="record-number">${state.totalAttempts}</strong>
-                </div>
-                <div class="record-card">
-                  <span class="record-label">정답</span>
-                  <strong class="record-number">${state.correctAnswers}</strong>
-                </div>
-                <div class="record-card">
-                  <span class="record-label">오답</span>
-                  <strong class="record-number">${state.wrongAnswers}</strong>
-                </div>
-              </div>
-            </article>
           </div>
 
           <article class="keypad-panel">
