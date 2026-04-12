@@ -1,4 +1,5 @@
-const GAME_DURATION_SECONDS = 60;
+const TIMES_TABLE_DURATION_SECONDS = 60;
+const FRACTION_DURATION_SECONDS = 300;
 const MIN_FACTOR = 2;
 const MAX_FACTOR = 9;
 const TIMES_TABLE_INPUT_LENGTH = 2;
@@ -9,6 +10,7 @@ const MODES = {
   timestable: {
     id: "timestable",
     label: "구구단",
+    durationSeconds: TIMES_TABLE_DURATION_SECONDS,
     eyebrow: "1분 두뇌 워밍업",
     title: "구구단\n타임어택",
     description:
@@ -30,6 +32,7 @@ const MODES = {
   fraction: {
     id: "fraction",
     label: "분수 덧셈·뺄셈",
+    durationSeconds: FRACTION_DURATION_SECONDS,
     eyebrow: "새 연산 모드",
     title: "분수\n덧셈·뺄셈",
     description:
@@ -45,8 +48,8 @@ const MODES = {
     rules: [
       "분수 모드에서는 초급, 중급, 고급 중 하나를 고를 수 있습니다.",
       "분자와 분모를 따로 입력하며, 뺄셈은 음수가 나오지 않게 출제됩니다.",
-      "초급부터 같은 분모는 나오지 않고, 쉬운 다른 분모 문제로 시작합니다.",
-      "중급과 고급은 기약분수만 정답이며, 더 넓은 분모 범위와 통분 부담이 들어갑니다.",
+      "초급은 초등학교 3학년 수준으로, 쉬운 다른 분모와 배수 관계 중심입니다.",
+      "중급은 4학년 수준, 고급은 5학년 수준으로 통분과 기약분수 부담이 커집니다.",
     ],
   },
 };
@@ -55,33 +58,33 @@ const FRACTION_LEVELS = {
   beginner: {
     id: "beginner",
     label: "초급",
-    description: "쉬운 다른 분모만, 동치분수 정답 인정",
+    description: "초3 수준, 쉬운 다른 분모와 동치분수",
     denominatorMin: 2,
-    denominatorMax: 99,
+    denominatorMax: 12,
     sameDenominatorOnly: false,
     allowEasyEquivalentDenominators: true,
     allowEquivalentAnswers: true,
     requireReducedAnswer: false,
-    keepAdditionProper: false,
+    keepAdditionProper: true,
   },
   intermediate: {
     id: "intermediate",
     label: "중급",
-    description: "다른 분모 6-36, 통분과 기약분수 연습",
-    denominatorMin: 6,
-    denominatorMax: 36,
+    description: "초4 수준, 다른 분모 4-18과 기약분수",
+    denominatorMin: 4,
+    denominatorMax: 18,
     sameDenominatorOnly: false,
     allowEasyEquivalentDenominators: false,
     allowEquivalentAnswers: false,
     requireReducedAnswer: true,
-    keepAdditionProper: false,
+    keepAdditionProper: true,
   },
   advanced: {
     id: "advanced",
     label: "고급",
-    description: "더 큰 분모 12-99, 빠른 통분과 기약분수",
-    denominatorMin: 12,
-    denominatorMax: 99,
+    description: "초5 수준, 다른 분모 6-36과 큰 계산",
+    denominatorMin: 6,
+    denominatorMax: 36,
     sameDenominatorOnly: false,
     allowEasyEquivalentDenominators: false,
     allowEquivalentAnswers: false,
@@ -111,7 +114,7 @@ const state = {
   screen: "start",
   selectedMode: "timestable",
   selectedLevel: "beginner",
-  timeLeft: GAME_DURATION_SECONDS,
+  timeLeft: TIMES_TABLE_DURATION_SECONDS,
   input: "",
   fractionInput: {
     numerator: "",
@@ -246,6 +249,10 @@ function getActiveLevel() {
 
 function getMaxInputLength() {
   return isFractionMode() ? FRACTION_INPUT_LENGTH : TIMES_TABLE_INPUT_LENGTH;
+}
+
+function getGameDurationSeconds() {
+  return getActiveMode().durationSeconds;
 }
 
 function getFeedbackLabel() {
@@ -395,7 +402,7 @@ function goToStartScreen() {
   stopTimer();
   window.clearTimeout(feedbackTimeoutId);
   state.screen = "start";
-  state.timeLeft = GAME_DURATION_SECONDS;
+  state.timeLeft = getGameDurationSeconds();
   clearInputs();
   state.totalAttempts = 0;
   state.correctAnswers = 0;
@@ -425,7 +432,7 @@ function startGame() {
   window.clearTimeout(feedbackTimeoutId);
 
   state.screen = "play";
-  state.timeLeft = GAME_DURATION_SECONDS;
+  state.timeLeft = getGameDurationSeconds();
   clearInputs();
   state.totalAttempts = 0;
   state.correctAnswers = 0;
@@ -459,6 +466,7 @@ function formatTime(seconds) {
 
 function setMode(mode) {
   state.selectedMode = mode;
+  state.timeLeft = getGameDurationSeconds();
   clearInputs();
   render();
 }
@@ -769,7 +777,7 @@ function renderStartScreen() {
         <div class="hero-metrics">
           <article class="metric-card">
             <span class="metric-label">게임 시간</span>
-            <strong class="metric-value">1분</strong>
+            <strong class="metric-value">${Math.floor(activeMode.durationSeconds / 60)}분</strong>
           </article>
           <article class="metric-card">
             <span class="metric-label">문제 범위</span>
@@ -894,7 +902,7 @@ function renderPlayScreen() {
     : `${state.currentProblem.left} × ${state.currentProblem.right}`;
 
   return `
-    <section class="screen">
+    <section class="screen screen-play">
       <div class="stack play-layout">
         <div class="topbar">
           <div class="stack topbar-info">

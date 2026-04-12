@@ -116,6 +116,11 @@ button {
   backdrop-filter: blur(10px);
 }
 
+.screen-play {
+  min-height: min(760px, calc(100dvh - 28px));
+  padding: clamp(16px, 2.4vw, 24px);
+}
+
 .screen::before,
 .screen::after {
   content: "";
@@ -394,7 +399,7 @@ button {
 
 .play-layout {
   display: grid;
-  gap: 18px;
+  gap: 14px;
 }
 
 .topbar {
@@ -485,14 +490,14 @@ button {
 
 .play-main {
   display: grid;
-  gap: 18px;
+  gap: 14px;
   grid-template-columns: minmax(0, 1.08fr) minmax(290px, 0.92fr);
   align-items: start;
 }
 
 .prompt-row {
   display: grid;
-  gap: 12px;
+  gap: 10px;
   grid-template-columns: minmax(0, 1.35fr) minmax(150px, 0.85fr);
   align-items: stretch;
 }
@@ -502,7 +507,7 @@ button {
 .score-card,
 .keypad-panel,
 .result-hero {
-  padding: 18px;
+  padding: 15px;
   border-radius: var(--radius-lg);
   background: var(--card);
   box-shadow: inset 0 0 0 2px var(--card-line);
@@ -510,12 +515,12 @@ button {
 
 .problem-card {
   display: grid;
-  gap: 14px;
+  gap: 10px;
 }
 
 .input-card {
   display: grid;
-  gap: 10px;
+  gap: 8px;
   align-content: center;
 }
 
@@ -575,10 +580,10 @@ button {
 }
 
 .input-display {
-  min-height: 96px;
+  min-height: 84px;
   display: grid;
   align-items: center;
-  padding: 16px 18px;
+  padding: 12px 14px;
   border-radius: 22px;
   background: linear-gradient(180deg, var(--surface), var(--surface-strong));
   box-shadow:
@@ -611,7 +616,7 @@ button {
 }
 
 .fraction-field {
-  min-height: 88px;
+  min-height: 74px;
   border: 0;
   border-radius: 18px;
   padding: 12px 14px;
@@ -690,7 +695,7 @@ button {
 
 .keypad-button {
   position: relative;
-  min-height: 88px;
+  min-height: 80px;
   border: 0;
   border-radius: 22px;
   padding: 14px 8px 12px;
@@ -793,11 +798,11 @@ button {
 
   .play-main {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 10px;
   }
 
   .prompt-row {
-    grid-template-columns: minmax(0, 1.2fr) minmax(140px, 0.8fr);
+    grid-template-columns: minmax(0, 1.18fr) minmax(126px, 0.82fr);
   }
 
   .problem-expression {
@@ -818,7 +823,7 @@ button {
   }
 
   .keypad-button {
-    min-height: 74px;
+    min-height: 68px;
   }
 
   .start-layout,
@@ -829,7 +834,7 @@ button {
 
   .stack,
   .play-layout {
-    gap: 14px;
+    gap: 10px;
   }
 
   .problem-card,
@@ -841,12 +846,12 @@ button {
   .record-card,
   .result-card,
   .rule-card {
-    padding: 14px;
+    padding: 12px;
   }
 
   .input-display {
-    min-height: 82px;
-    padding: 12px 16px;
+    min-height: 72px;
+    padding: 10px 12px;
   }
 
   .helper-text,
@@ -988,16 +993,16 @@ button {
   }
 
   .play-main {
-    gap: 10px;
+    gap: 8px;
   }
 
   .prompt-row {
-    gap: 8px;
-    grid-template-columns: minmax(0, 1.25fr) minmax(110px, 0.75fr);
+    gap: 6px;
+    grid-template-columns: minmax(0, 1.22fr) minmax(100px, 0.78fr);
   }
 
   .problem-card {
-    gap: 8px;
+    gap: 6px;
   }
 
   .problem-caption {
@@ -1028,8 +1033,8 @@ button {
   }
 
   .input-display {
-    min-height: 64px;
-    padding: 10px 12px;
+    min-height: 58px;
+    padding: 8px 10px;
     border-radius: 18px;
   }
 
@@ -1038,8 +1043,8 @@ button {
   }
 
   .fraction-field {
-    min-height: 70px;
-    padding: 10px 12px;
+    min-height: 58px;
+    padding: 8px 10px;
     border-radius: 16px;
   }
 
@@ -1063,7 +1068,7 @@ button {
   }
 
   .keypad-button {
-    min-height: 62px;
+    min-height: 56px;
     border-radius: 18px;
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.22),
