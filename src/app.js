@@ -39,7 +39,7 @@ const MODES = {
       "분수의 덧셈과 뺄셈을 단계별로 연습해보세요. 초급부터 고급까지 차근차근 올라가며 익힐 수 있어요.",
     metricValue: "초급-고급",
     metricHint: "분자·분모 입력",
-    helper: "숫자패드로 값을 넣고, 분자와 분모 칸을 눌러 위치를 바꿀 수 있어요.",
+    helper: "숫자패드로 값을 넣고, 먼저 분모를 쓴 뒤 분자를 입력해보세요.",
     caption: "랜덤 분수 연산",
     inputLabel: "지금 입력한 답",
     inputHint: "분자와 분모를 모두 입력",
@@ -120,7 +120,7 @@ const state = {
     numerator: "",
     denominator: "",
   },
-  activeFractionField: "numerator",
+  activeFractionField: "denominator",
   totalAttempts: 0,
   correctAnswers: 0,
   wrongAnswers: 0,
@@ -379,7 +379,7 @@ function clearInputs() {
   state.input = "";
   state.fractionInput.numerator = "";
   state.fractionInput.denominator = "";
-  state.activeFractionField = "numerator";
+  state.activeFractionField = "denominator";
 }
 
 function resetFeedback() {
@@ -535,7 +535,7 @@ function handleBackspace() {
       return;
     }
 
-    state.input = state.input.slice(0, -1);
+    state.input = "";
     render();
     return;
   }
@@ -544,13 +544,13 @@ function handleBackspace() {
   const currentValue = state.fractionInput[activeField];
 
   if (currentValue) {
-    state.fractionInput[activeField] = currentValue.slice(0, -1);
+    state.fractionInput[activeField] = "";
     render();
     return;
   }
 
-  if (activeField === "denominator") {
-    state.activeFractionField = "numerator";
+  if (activeField === "numerator") {
+    state.activeFractionField = "denominator";
     render();
   }
 }
@@ -610,7 +610,10 @@ function handleSubmit() {
     const submittedFraction = getSubmittedFraction();
 
     if (!submittedFraction) {
-      if (state.fractionInput.numerator && !state.fractionInput.denominator) {
+      if (state.fractionInput.denominator && !state.fractionInput.numerator) {
+        state.activeFractionField = "numerator";
+        render();
+      } else if (state.fractionInput.numerator && !state.fractionInput.denominator) {
         state.activeFractionField = "denominator";
         render();
       }
@@ -695,7 +698,7 @@ function handleKeyboardInput(event) {
   if (isFractionMode() && (event.key === "/" || event.key === "Tab")) {
     event.preventDefault();
     setActiveFractionField(
-      state.activeFractionField === "numerator" ? "denominator" : "numerator",
+      state.activeFractionField === "denominator" ? "numerator" : "denominator",
     );
   }
 }
@@ -968,7 +971,7 @@ function renderPlayScreen() {
           <article class="keypad-panel">
             <h2 class="section-title">전화기 숫자패드</h2>
             <p class="helper-text">
-              ${isFractionMode() ? "분자와 분모 칸을 눌러 입력 위치를 바꿀 수 있어요." : "지우기는 한 칸 삭제, 확인은 답 제출입니다."}
+              ${isFractionMode() ? "분모를 먼저 쓰고, 칸을 눌러 분자로 옮길 수 있어요. 지우기는 현재 칸 전체를 지웁니다." : "지우기는 입력한 답 전체를 지우고, 확인은 답 제출입니다."}
             </p>
             <div class="keypad">
               ${keypadButtons}
