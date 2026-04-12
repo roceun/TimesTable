@@ -241,11 +241,99 @@ button {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
+.choices-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.level-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
 .rule-card {
   padding: 16px;
   border-radius: var(--radius-md);
-  background: var(--card);
-  box-shadow: inset 0 0 0 2px var(--card-line);
+  background: color-mix(in srgb, var(--card) 78%, white);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--card-line) 85%, white);
+}
+
+.choice-card {
+  display: grid;
+  gap: 10px;
+  text-align: left;
+  padding: 16px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 95%, white), color-mix(in srgb, var(--surface-strong) 88%, white));
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--accent) 18%, white),
+    0 16px 28px rgba(66, 110, 173, 0.12);
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    background-color 140ms ease;
+}
+
+.choice-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--accent) 38%, white),
+    0 18px 30px rgba(66, 110, 173, 0.18);
+}
+
+.choice-card.is-selected {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 96%, white), color-mix(in srgb, var(--surface) 92%, white));
+  box-shadow:
+    inset 0 0 0 3px color-mix(in srgb, var(--accent) 56%, white),
+    0 18px 30px rgba(66, 110, 173, 0.18);
+}
+
+.choice-card:focus-visible,
+.fraction-field:focus-visible {
+  outline: 4px solid rgba(92, 184, 232, 0.3);
+  outline-offset: 3px;
+}
+
+.choice-title {
+  font-size: 1.08rem;
+  font-weight: 900;
+}
+
+.choice-copy,
+.choice-meta {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.choice-meta {
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.choice-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.choice-badge {
+  min-height: 32px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: var(--accent-strong);
+  background: color-mix(in srgb, var(--accent-soft) 92%, white);
+  font-size: 0.78rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.choice-card.is-selected .choice-badge {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
 }
 
 .rule-card h2,
@@ -317,6 +405,12 @@ button {
 
 .topbar-info {
   gap: 8px;
+}
+
+.topbar-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .topbar-actions {
@@ -432,6 +526,45 @@ button {
   font-weight: 900;
 }
 
+.problem-math {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(10px, 2vw, 18px);
+  flex-wrap: wrap;
+}
+
+.math-fraction {
+  display: inline-grid;
+  grid-template-rows: auto 4px auto;
+  justify-items: center;
+  align-items: center;
+  min-width: clamp(70px, 12vw, 112px);
+  padding: 4px 8px;
+}
+
+.math-fraction-top,
+.math-fraction-bottom {
+  font-size: clamp(1.7rem, 5vw, 2.8rem);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.math-fraction-line {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.9;
+}
+
+.math-operator {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1;
+  font-weight: 900;
+}
+
 .problem-caption {
   display: flex;
   justify-content: space-between;
@@ -462,6 +595,81 @@ button {
 
 .input-placeholder {
   color: #8aa6c9;
+}
+
+.fraction-display {
+  display: grid;
+  gap: 10px;
+  justify-items: stretch;
+}
+
+.fraction-bar {
+  display: block;
+  height: 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 72%, white);
+}
+
+.fraction-field {
+  min-height: 88px;
+  border: 0;
+  border-radius: 18px;
+  padding: 12px 14px;
+  display: grid;
+  gap: 6px;
+  text-align: left;
+  color: var(--text);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, white), color-mix(in srgb, var(--surface-strong) 88%, white));
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--surface-line) 94%, white),
+    0 10px 20px rgba(66, 110, 173, 0.08);
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    background-color 140ms ease;
+}
+
+.fraction-field:hover {
+  transform: translateY(-2px);
+}
+
+.fraction-field.is-selected {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 88%, white), color-mix(in srgb, var(--surface) 94%, white));
+  box-shadow:
+    inset 0 0 0 3px color-mix(in srgb, var(--accent) 55%, white),
+    0 14px 22px rgba(66, 110, 173, 0.14);
+}
+
+.fraction-field-label {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.fraction-field-value {
+  font-size: clamp(1.7rem, 7vw, 2.5rem);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.start-choice-section {
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 94%, white), color-mix(in srgb, var(--surface-strong) 88%, white));
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--accent) 22%, white),
+    0 16px 28px rgba(66, 110, 173, 0.12);
+}
+
+.hero-metrics {
+  opacity: 0.9;
+}
+
+.metric-card {
+  background: color-mix(in srgb, var(--card) 76%, white);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--card-line) 82%, white);
 }
 
 .score-grid {
@@ -596,6 +804,19 @@ button {
     font-size: clamp(2.8rem, 16vw, 4.3rem);
   }
 
+  .math-fraction {
+    min-width: 62px;
+  }
+
+  .math-fraction-top,
+  .math-fraction-bottom {
+    font-size: clamp(1.45rem, 6vw, 2.2rem);
+  }
+
+  .math-operator {
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+  }
+
   .keypad-button {
     min-height: 74px;
   }
@@ -644,6 +865,10 @@ button {
   .rules-grid {
     grid-template-columns: 1fr;
     gap: 10px;
+  }
+
+  .choices-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -783,6 +1008,25 @@ button {
     font-size: clamp(2.4rem, 14vw, 3.3rem);
   }
 
+  .problem-math {
+    gap: 8px;
+  }
+
+  .math-fraction {
+    min-width: 54px;
+    padding: 2px 4px;
+    grid-template-rows: auto 3px auto;
+  }
+
+  .math-fraction-top,
+  .math-fraction-bottom {
+    font-size: clamp(1.15rem, 7vw, 1.75rem);
+  }
+
+  .math-operator {
+    font-size: clamp(1.4rem, 7vw, 2rem);
+  }
+
   .input-display {
     min-height: 64px;
     padding: 10px 12px;
@@ -791,6 +1035,22 @@ button {
 
   .input-value {
     font-size: clamp(1.7rem, 9vw, 2.4rem);
+  }
+
+  .fraction-field {
+    min-height: 70px;
+    padding: 10px 12px;
+    border-radius: 16px;
+  }
+
+  .fraction-field-label,
+  .choice-meta,
+  .choice-badge {
+    font-size: 0.76rem;
+  }
+
+  .fraction-field-value {
+    font-size: clamp(1.35rem, 8vw, 2rem);
   }
 
   .score-grid {
