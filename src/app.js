@@ -133,6 +133,7 @@ const state = {
 
 let timerId = 0;
 let feedbackTimeoutId = 0;
+let lastPointerHandledAt = 0;
 
 function randomBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -765,6 +766,7 @@ function renderLevelCards() {
 
 function renderStartScreen() {
   const activeMode = getActiveMode();
+  const startLabel = `${Math.floor(activeMode.durationSeconds / 60)}분 시작`;
 
   return `
     <section class="screen">
@@ -817,7 +819,7 @@ function renderStartScreen() {
         </div>
 
         <button class="primary-button" type="button" data-action="start">
-          1분 시작
+          ${startLabel}
         </button>
       </div>
     </section>
@@ -1037,33 +1039,60 @@ function render() {
   app.innerHTML = renderResultScreen();
 }
 
-document.addEventListener("click", (event) => {
+function handleAction(actionTarget) {
+  const action = actionTarget.dataset.action;
+
+  if (action === "start") {
+    startGame();
+  } else if (action === "close-game") {
+    confirmCloseGame();
+  } else if (action === "go-home") {
+    goToStartScreen();
+  } else if (action === "set-mode") {
+    setMode(actionTarget.dataset.mode);
+  } else if (action === "set-level") {
+    setLevel(actionTarget.dataset.level);
+  } else if (action === "focus-fraction-field") {
+    setActiveFractionField(actionTarget.dataset.field);
+  }
+}
+
+function handlePressTarget(event) {
   const actionTarget = event.target.closest("[data-action]");
   const keyTarget = event.target.closest("[data-key]");
 
   if (actionTarget) {
-    const action = actionTarget.dataset.action;
-
-    if (action === "start") {
-      startGame();
-    } else if (action === "close-game") {
-      confirmCloseGame();
-    } else if (action === "go-home") {
-      goToStartScreen();
-    } else if (action === "set-mode") {
-      setMode(actionTarget.dataset.mode);
-    } else if (action === "set-level") {
-      setLevel(actionTarget.dataset.level);
-    } else if (action === "focus-fraction-field") {
-      setActiveFractionField(actionTarget.dataset.field);
-    }
-
+    handleAction(actionTarget);
     return;
   }
 
   if (keyTarget) {
     pressKey(keyTarget.dataset.key);
   }
+}
+
+document.addEventListener("pointerup", (event) => {
+  if (event.pointerType !== "touch") {
+    return;
+  }
+
+  const target = event.target.closest("[data-action], [data-key]");
+
+  if (!target) {
+    return;
+  }
+
+  lastPointerHandledAt = Date.now();
+  event.preventDefault();
+  handlePressTarget(event);
+});
+
+document.addEventListener("click", (event) => {
+  if (Date.now() - lastPointerHandledAt < 350) {
+    return;
+  }
+
+  handlePressTarget(event);
 });
 
 document.addEventListener("keydown", handleKeyboardInput);
